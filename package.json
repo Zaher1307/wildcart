@@ -1,0 +1,34 @@
+{
+  "name": "wildcart",
+  "version": "1.0.0",
+  "description": "E-commerce web project",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm jest",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zaher1307/wildcart.git"
+  },
+  "author": "Ahmed Zaher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zaher1307/wildcart/issues"
+  },
+  "homepage": "https://github.com/Zaher1307/wildcart#readme",
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "pg": "^8.9.0",
+    "sequelize": "^6.28.0",
+    "sequelize-cli": "^6.6.0"
+  }
+}
