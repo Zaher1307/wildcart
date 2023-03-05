@@ -1,49 +1,27 @@
-const validator = require('validator')
 const {
   createUser
 } = require('../services/user')
 const failureResponse = require('../utils/failure-response')
 const passport = require('../config/passport-config')(require('passport'))
+const { UniqueConstraintError } = require('sequelize')
+const { validateRegister } = require('../utils/validate-register')
 
 async function register(req, res, next) {
-  const {
-    userName, email, firstName, lastName, password,
-    phoneNumber, address, shopName, userType
-  } = req.body
-
-  if (
-    !userName ||
-    !email ||
-    !firstName ||
-    !lastName ||
-    !password ||
-    !phoneNumber ||
-    !address ||
-    !userType
-  ) {
-    return failureResponse(res, 400, 'required fields are missing')
-  }
-
-  if (userType === 'seller' && !shopName) {
-    return failureResponse(res, 400, 'required fields are missing')
-  }
-
-  if (!validator.isStrongPassword(password)) {
-    return failureResponse(res, 400, 'weak password')
-  }
-
-  if (!validator.isEmail(email)) {
-    return failureResponse(res, 400, 'invalid email')
-  }
-
-  if (!validator.isMobilePhone(phoneNumber)) {
-    return failureResponse(res, 400, 'invalid phone number')
+  const message = validateRegister(req.body)
+  if (message) {
+    failureResponse(res, 400, message)
+    return
   }
 
   try {
     await createUser(req.body)
     res.sendStatus(201)
   } catch (err) {
+    if (err instanceof UniqueConstraintError) {
+      const field = err.errors[0].path === 'user_name' ? 'username' : err.path
+      err.message = `${field} is already exists`
+      err.status = 409
+    }
     next(err)
   }
 }
@@ -51,7 +29,6 @@ async function register(req, res, next) {
 async function login(req, res, next) {
   passport.authenticate('local', { session: true }, (err, user, info) => {
     if (err) {
-      console.log(err)
       return next(err)
     }
     if (!user) {
