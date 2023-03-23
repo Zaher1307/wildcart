@@ -5,7 +5,7 @@ const process = require('process')
 const basename = path.basename(__filename)
 const env = process.env.NODE_ENV || 'dev'
 const config = require(
-  path.join(__dirname, '/../config/database-config.js')
+  path.join(__dirname, '/../configs/database-config.js')
 )[env]
 const db = {}
 
