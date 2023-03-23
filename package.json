@@ -4,9 +4,9 @@
   "description": "E-commerce web project",
   "main": "server.js",
   "scripts": {
-    "test": "npm jest",
-    "dev": "nodemon server.js",
-    "prod": "node server.js"
+    "test": "export NODE_ENV=test;npm jest",
+    "dev": "export NODE_ENV=dev; nodemon server.js",
+    "prod": "export NODE_ENV=prod;node server.js"
   },
   "repository": {
     "type": "git",
