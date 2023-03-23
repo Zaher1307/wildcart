@@ -2,11 +2,11 @@
   "name": "wildcart",
   "version": "1.0.0",
   "description": "E-commerce web project",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "export NODE_ENV=test;npm jest",
-    "dev": "export NODE_ENV=dev; nodemon server.js",
-    "prod": "export NODE_ENV=prod;node server.js"
+    "dev": "export NODE_ENV=dev; nodemon index.js",
+    "prod": "export NODE_ENV=prod;node index.js"
   },
   "repository": {
     "type": "git",
