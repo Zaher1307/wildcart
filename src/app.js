@@ -1,13 +1,15 @@
 require('dotenv').config()
 const cors = require('cors')
-const db = require('./models/')
 const express = require('express')
-const userRouter = require('./routes/user')
-const productRouter = require('./routes/product')
-const errHandler = require('./middlewares/error-handler')
 const session = require('express-session')
 const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
+
+const db = require('./models/')
+const userRouter = require('./routes/user')
+const productRouter = require('./routes/product')
+const reviewRouter = require('./routes/review')
+const errHandler = require('./middlewares/error-handler')
 
 const app = express()
 const sessionStore = new SequelizeStore({
@@ -38,6 +40,7 @@ app.get('/healthz', (req, res) => {
 
 app.use('/user', userRouter)
 app.use('/product', productRouter)
+app.use('/review', reviewRouter)
 
 app.use(errHandler)
 

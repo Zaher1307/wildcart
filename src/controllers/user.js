@@ -1,9 +1,8 @@
-const {
-  createUser
-} = require('../services/user')
+const { UniqueConstraintError } = require('sequelize')
+
+const { createUser } = require('../services/user')
 const failureResponse = require('../utils/failure-response')
 const passport = require('../configs/passport-config')(require('passport'))
-const { UniqueConstraintError } = require('sequelize')
 const { validateRegister } = require('../utils/validate-register')
 
 async function register(req, res, next) {

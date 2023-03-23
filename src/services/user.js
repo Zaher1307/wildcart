@@ -1,5 +1,7 @@
 const crypto = require('crypto')
+
 const bcrypt = require('bcrypt')
+
 const { User, Customer, Seller } = require('../models')
 
 async function createUser(userData) {
