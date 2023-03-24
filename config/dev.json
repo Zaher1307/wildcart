@@ -4,7 +4,7 @@
     "host": "localhost",
     "port": 5432,
     "database": "wildcart_dev",
-    "username": "postgres",
+    "username": "root",
     "password": "secret"
   },
   "server": {

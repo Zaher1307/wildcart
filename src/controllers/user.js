@@ -1,5 +1,3 @@
-const { UniqueConstraintError } = require('sequelize')
-
 const { createUser } = require('../services/user')
 const failureResponse = require('../utils/failure-response')
 const passport = require('../configs/passport-config')(require('passport'))
@@ -13,13 +11,8 @@ async function register(req, res, next) {
 
   try {
     await createUser(req.body)
-    res.sendStatus(201)
+    return res.sendStatus(201)
   } catch (err) {
-    if (err instanceof UniqueConstraintError) {
-      const field = err.errors[0].path === 'user_name' ? 'username' : err.path
-      err.message = `${field} is already exists`
-      err.status = 409
-    }
     next(err)
   }
 }

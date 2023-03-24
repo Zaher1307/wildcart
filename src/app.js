@@ -9,7 +9,7 @@ const db = require('./models/')
 const userRouter = require('./routes/user')
 const productRouter = require('./routes/product')
 const reviewRouter = require('./routes/review')
-const errHandler = require('./middlewares/error-handler')
+const log = require('./configs/winston-config')
 
 const app = express()
 const sessionStore = new SequelizeStore({
@@ -42,6 +42,9 @@ app.use('/user', userRouter)
 app.use('/product', productRouter)
 app.use('/review', reviewRouter)
 
-app.use(errHandler)
+app.use((err, req, res, next) => {
+  log.error(err)
+  res.status(500).json({ message: 'Internal server Error ' })
+})
 
 module.exports = app
