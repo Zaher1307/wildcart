@@ -3,7 +3,7 @@ const { UniqueConstraintError } = require('sequelize')
 const { createUser } = require('../services/user')
 const failureResponse = require('../utils/failure-response')
 const passport = require('../configs/passport-config')(require('passport'))
-const { validateRegister } = require('../utils/validate-register')
+const validateRegister = require('../utils/validate-register')
 
 async function register(req, res, next) {
   const message = validateRegister(req.body)

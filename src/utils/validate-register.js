@@ -32,6 +32,4 @@ function validateRegister(registerData) {
   return null
 }
 
-module.exports = {
-  validateRegister
-}
+module.exports = validateRegister
