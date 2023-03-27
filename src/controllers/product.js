@@ -1,18 +1,10 @@
+const { ValidationError } = require('sequelize')
+
 const {
   retrieveProducts, insertProduct, retrieveProduct, modifyProduct,
   retrieveSellerProducts
 } = require('../services/product')
-const { ValidationError } = require('sequelize')
 const failureResponse = require('../utils/failure-response')
-
-async function getProducts(req, res, next) {
-  try {
-    const products = await retrieveProducts()
-    res.status(200).json({ products })
-  } catch (err) {
-    next(err)
-  }
-}
 
 async function createProduct(req, res, next) {
   try {
@@ -24,6 +16,15 @@ async function createProduct(req, res, next) {
       err.message = `${invalidField} must be valid`
       err.status = 400
     }
+    next(err)
+  }
+}
+
+async function getProducts(req, res, next) {
+  try {
+    const products = await retrieveProducts()
+    res.status(200).json({ products })
+  } catch (err) {
     next(err)
   }
 }
