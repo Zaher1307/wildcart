@@ -1,10 +1,10 @@
 const { createUser } = require('../services/user')
 const failureResponse = require('../utils/failure-response')
 const passport = require('../configs/passport-config')(require('passport'))
-const validateRegister = require('../utils/validate-register')
+const { inputTypes, validateInput } = require('../utils/validate-input')
 
 async function register(req, res, next) {
-  const message = validateRegister(req.body)
+  const message = validateInput(req.body, inputTypes.REGISTER)
   if (message) {
     return failureResponse(res, 400, message)
   }
@@ -18,6 +18,11 @@ async function register(req, res, next) {
 }
 
 async function login(req, res, next) {
+  const message = validateInput(req.body, inputTypes.LOGIN)
+  if (message) {
+    return failureResponse(res, 400, message)
+  }
+
   passport.authenticate('local', { session: true }, (err, user, info) => {
     if (err) {
       return next(err)

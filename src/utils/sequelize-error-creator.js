@@ -10,7 +10,6 @@ const log = require('../configs/winston-config')
 
 function createSequelizeErrorObject(err) {
   log.debug('creating error object')
-  // log.debug(err.constructor.name)
 
   if (err instanceof ConnectionRefusedError) {
     log.info('cannot connect to database, timeout')
