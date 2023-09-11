@@ -1,6 +1,6 @@
 const {
-  // ForeignKeyConstraintError,
   // DatabaseError,
+  ForeignKeyConstraintError,
   UniqueConstraintError,
   ConnectionError,
   ConnectionRefusedError
@@ -31,6 +31,12 @@ function createSequelizeErrorObject(err) {
     return {
       status: 409,
       message: `${err.errors[0].value} already exists`
+    }
+  } else if (err instanceof ForeignKeyConstraintError) {
+    log.debug(err.detail)
+    return {
+      status: 409,
+      message: err.parent.detail
     }
   }
 }

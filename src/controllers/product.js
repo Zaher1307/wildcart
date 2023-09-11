@@ -5,17 +5,18 @@ const {
   retrieveSellerProducts
 } = require('../services/product')
 const failureResponse = require('../utils/failure-response')
+const { inputTypes, validateInput } = require('../utils/validate-input')
 
 async function createProduct(req, res, next) {
+  const message = validateInput(req.body, inputTypes.POST_PRODUCT)
+  if (message) {
+    return failureResponse(res, 400, message)
+  }
+
   try {
     const id = await insertProduct(req.body, req.user.id)
     res.status(201).json({ id })
   } catch (err) {
-    if (err instanceof ValidationError) {
-      const invalidField = err.errors[0].path
-      err.message = `${invalidField} must be valid`
-      err.status = 400
-    }
     next(err)
   }
 }
